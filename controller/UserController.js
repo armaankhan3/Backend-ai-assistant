@@ -21,11 +21,9 @@ export const getcurrentUser = async (req, res) => {
 export const UpdateAssistent = async (req, res) => {
     try {
         const userId = req.user.id;
-        // Use correct field names from frontend
         const { assistantName, assistantImage, description } = req.body;
         let imageUrl = null;
 
-        // If image uploaded, upload to Cloudinary
         if (req.file) {
             imageUrl = await Uploadoncloudinary(req.file.path);
             if (!imageUrl) {
@@ -33,31 +31,19 @@ export const UpdateAssistent = async (req, res) => {
             }
         }
 
-        // Log assistantName and assistantImage for debugging
-        console.log('ASSISTANT UPDATE:', {
-            assistantName,
-            assistantImage: imageUrl || assistantImage
-        });
-
-        // Accept either all fields or error
-        // Accept both file upload (imageUrl) and direct image URL (assistantImage)
-        // Accept empty string as invalid for all fields
         if (!assistantName || assistantName.trim() === '' ||
             (!imageUrl && (!assistantImage || assistantImage === 'null' || assistantImage === 'undefined' || assistantImage.trim() === '')) ||
             !description || description.trim() === '') {
             return res.status(400).json({ message: "Assistant name, image, and description are required." });
         }
 
-        // If assistantImage is a URL (from frontend), use it directly. If imageUrl (from upload), use that.
         let finalAssistantImage = imageUrl || assistantImage;
         // If the image is a local file path (starts with /src or /assets), allow it (frontend will resolve)
         if (finalAssistantImage && (finalAssistantImage.startsWith('/src') || finalAssistantImage.startsWith('/assets'))) {
             // No transformation needed for Vite/React static assets
         }
 
-        // Ensure description is always set
         const safeDescription = (description && description.trim()) ? description.trim() : 'A creative and friendly assistant for your daily needs.';
-        // Optionally: store a timestamp for assistant update
         const updateData = {
             assistantName: assistantName.trim(),
             assistantImage: finalAssistantImage,
@@ -65,7 +51,6 @@ export const UpdateAssistent = async (req, res) => {
             assistantUpdatedAt: new Date(),
         };
 
-        // Update the user's assistantName, assistantImage, and description fields
         const user = await User.findByIdAndUpdate(
             userId,
             updateData,
@@ -75,14 +60,6 @@ export const UpdateAssistent = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        // Log the updated assistant data for debugging
-        console.log('Assistant updated:', {
-            assistantName: user.assistantName,
-            assistantImage: user.assistantImage,
-            description: user.description,
-            userId: user._id
-        });
 
         return res.status(200).json({ user });
     } catch (error) {
