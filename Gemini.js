@@ -82,6 +82,7 @@ const geminiResponse = async (command, assistantName, userName = "Unknown") => {
           maxOutputTokens: 1024,
         }
       };
+      //ensure requestData is a valid object
 
       console.log('Request data:', JSON.stringify(requestData, null, 2));
 
