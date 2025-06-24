@@ -10,11 +10,12 @@ import morgan from 'morgan';
 import geminiResponse from './Gemini.js';
 
 const app = express();
+// Load environment variables
+// dotenv.config();
+// Set up allowed origins for CORS
 
 const allowedOrigins = [
   'https://ai-assistant-frontend-brown.vercel.app',
-  'https://ai-assistant-frontend-armaankhan3s-projects.vercel.app',
-  'https://ai-assistant-frontend-git-main-armaankhan3s-projects.vercel.app',
   'http://localhost:5173'
 ];
 
