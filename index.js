@@ -39,6 +39,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
+// Example: If you set cookies for authentication, ensure they are cross-site compatible
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
