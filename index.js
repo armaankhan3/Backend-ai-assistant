@@ -18,6 +18,7 @@ const allowedOrigins = [
   'http://localhost:5173'
 ];
 
+// CORS MUST BE FIRST
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl, etc.)
