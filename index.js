@@ -12,7 +12,6 @@ import geminiResponse from './Gemini.js';
 const app = express();
 // Load environment variables
 // dotenv.config();
-// Set up allowed origins for CORS
 
 const allowedOrigins = [
   'https://ai-assistant-frontend-brown.vercel.app',
@@ -39,11 +38,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
-// Example: If you set cookies for authentication, ensure they are cross-site compatible
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
