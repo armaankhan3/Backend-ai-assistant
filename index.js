@@ -29,7 +29,8 @@ app.use(cors({
     }
     return callback(null, true);
   },
-  credentials: true
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow Authorization header for JWT
 }));
 
 const PORT = process.env.PORT || 8000;
