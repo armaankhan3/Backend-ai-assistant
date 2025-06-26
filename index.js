@@ -48,6 +48,18 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "API is running 🚀" });
 });
 
+// Fallback CORS handler for 404 and error responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://frontend-ai-virtual.vercel.app");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // Start server
 const startServer = async () => {
     try {
