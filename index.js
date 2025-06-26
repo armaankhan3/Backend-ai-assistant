@@ -14,7 +14,7 @@ const app = express();
 // dotenv.config();
 
 const allowedOrigins = [
-  'https://ai-assistant-frontend-brown.vercel.app',
+  'https://frontend-ai-virtual.vercel.app',
   'http://localhost:5173'
 ];
 
